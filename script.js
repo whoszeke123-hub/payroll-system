@@ -7,7 +7,12 @@ localStorage.setItem("employees",JSON.stringify(employees));
 localStorage.setItem("timeRecords",JSON.stringify(timeRecords));
 }
 
-// NAVIGATION
+function hideAll(){
+document.querySelectorAll(".form-container")
+.forEach(e=>e.style.display="none");
+document.getElementById("homePage").style.display="none";
+}
+
 function showAdd(){hideAll();addPage.style.display="block";}
 function showTime(){hideAll();timePage.style.display="block";}
 function showFile(){hideAll();filePage.style.display="block";renderFile();}
@@ -15,17 +20,7 @@ function showSearch(){hideAll();searchPage.style.display="block";}
 function showUpdate(){hideAll();updatePage.style.display="block";}
 function backHome(){hideAll();homePage.style.display="block";}
 
-function hideAll(){
-document.querySelectorAll(".form-container").forEach(e=>e.style.display="none");
-homePage.style.display="none";
-}
-
-// LIMIT DATE
-date.max = new Date().toISOString().split("T")[0];
-udate.max = new Date().toISOString().split("T")[0];
-
-// ADD
-addForm.addEventListener("submit",e=>{
+document.getElementById("addForm").addEventListener("submit",e=>{
 e.preventDefault();
 
 employees.push({
@@ -47,150 +42,81 @@ alert("Saved!");
 e.target.reset();
 });
 
-// CHECK FILE (RESTORED FORMAT)
 function renderFile(){
-
 fileList.innerHTML="";
-
-let grouped={};
-
 employees.forEach(emp=>{
-if(!grouped[emp.dept]) grouped[emp.dept]=[];
-grouped[emp.dept].push(emp);
-});
-
-for(let dept in grouped){
-
-fileList.innerHTML+=`<h3 style="color:#93c5fd;margin-top:15px">${dept}</h3>`;
-
-grouped[dept].forEach(emp=>{
-
-let salary = emp.rate * emp.hours * 22;
-
-fileList.innerHTML+=`
-<pre style="
-color:white;
-background:rgba(255,255,255,0.05);
-padding:15px;
-margin:10px 0;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.2);
-text-align:left;
-">
-
-==================================================
-Employee Name      : ${emp.fname} ${emp.mname} ${emp.lname}
-Employee Address   : ${emp.address}
-Employee ID        : ${emp.id}
-Department         : ${emp.dept}
-Email              : ${emp.email}
-Contact Number     : ${emp.number}
-Date of Employment : ${emp.date}
-Rate Per Hour      : ${emp.rate}
-Daily Hours        : ${emp.hours}
-Monthly Salary     : ₱${salary.toFixed(2)}
-==================================================
-
-</pre>
-`;
+fileList.innerHTML += `
+<div>
+${emp.fname} ${emp.lname} - ${emp.id}
+</div>`;
 });
 }
-}
 
-// DELETE
-function deleteEmployee(id){
-employees = employees.filter(e=>e.id!==id);
-saveStorage();
-renderFile();
-}
-
-// TIME
 function saveTime(){
 let emp = employees.find(e=>e.id===timeID.value);
 if(!emp){timeMsg.innerText="Not found";return;}
 
-timeRecords.push({id:emp.id,in:timeIn.value,out:timeOut.value});
+timeRecords.push({
+id:emp.id,
+in:timeIn.value,
+out:timeOut.value
+});
+
 saveStorage();
 timeMsg.innerText="Saved!";
 }
 
-// SEARCH
-function filterSalary(type){
-searchResult.innerHTML="";
-
-employees.forEach(emp=>{
-let salary=emp.rate*emp.hours*22;
-
-if((type==="below"&&salary<50000)||(type==="above"&&salary>=50000)){
-searchResult.innerHTML+=`
-<div style="border:1px solid white;padding:10px;margin:10px;border-radius:10px;">
-${emp.fname} ${emp.mname} ${emp.lname}<br>
-₱${salary.toFixed(2)}
-</div>`;
-}
-});
-}
-
-// NAME SEARCH
 function searchByName(){
 searchResult.innerHTML="";
 let s = searchName.value.toLowerCase();
 
-employees.forEach(emp=>{
-let full = `${emp.fname} ${emp.mname} ${emp.lname}`.toLowerCase();
+employees.forEach(e=>{
+let full = (e.fname+" "+e.lname).toLowerCase();
 if(full.includes(s)){
-searchResult.innerHTML+=`<div>${full}</div>`;
+searchResult.innerHTML += `<div>${full}</div>`;
 }
 });
 }
 
-// ID SEARCH
 function searchByID(){
-searchResult.innerHTML="";
 let emp = employees.find(e=>e.id===searchID.value);
-
-searchResult.innerHTML = emp ? `${emp.fname} ${emp.mname} ${emp.lname}` : "Not found";
+searchResult.innerHTML = emp ? emp.fname+" "+emp.lname : "Not found";
 }
 
-// UPDATE
-function findEmployee(){
-let emp = employees.find(e=>e.id===updateID.value);
-if(!emp){updateMsg.innerText="Not found";return;}
+function filterSalary(type){
+searchResult.innerHTML="";
+employees.forEach(emp=>{
+let salary = emp.rate*emp.hours*22;
 
-selectedEmployee=emp;
+if(type==="below" && salary<50000 ||
+type==="above" && salary>=50000){
+searchResult.innerHTML += `<div>${emp.fname} - ₱${salary}</div>`;
+}
+});
+}
+
+function findEmployee(){
+selectedEmployee = employees.find(e=>e.id===updateID.value);
+if(!selectedEmployee){updateMsg.innerText="Not found";return;}
+
 editForm.style.display="block";
 
-ufname.value=emp.fname;
-umname.value=emp.mname;
-ulname.value=emp.lname;
-uaddress.value=emp.address;
-udept.value=emp.dept;
-uemail.value=emp.email;
-unumber.value=emp.number;
-udate.value=emp.date;
-urate.value=emp.rate;
-uhours.value=emp.hours;
+ufname.value=selectedEmployee.fname;
+umname.value=selectedEmployee.mname;
+ulname.value=selectedEmployee.lname;
 }
 
 function saveUpdate(){
 Object.assign(selectedEmployee,{
 fname:ufname.value,
 mname:umname.value,
-lname:ulname.value,
-address:uaddress.value,
-dept:udept.value,
-email:uemail.value,
-number:unumber.value,
-date:udate.value,
-rate:+urate.value,
-hours:+uhours.value
+lname:ulname.value
 });
 
 saveStorage();
 alert("Updated!");
 }
 
-// EXIT
 function exitSystem(){
 alert("Close tab manually.");
 }
