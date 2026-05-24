@@ -1,47 +1,20 @@
 let employees = [];
 
 function showAdd(){hideAll();addPage.style.display="block";}
-function showTime(){hideAll();timePage.style.display="block";}
 function showFile(){hideAll();filePage.style.display="block";renderFile();}
 function showSearch(){hideAll();searchPage.style.display="block";}
 function showUpdate(){hideAll();updatePage.style.display="block";}
 function backHome(){hideAll();homePage.style.display="block";}
 
 function hideAll(){
-document.querySelectorAll(".form-container").forEach(e=>e.style.display="none");
+document.querySelectorAll(".form-container")
+.forEach(e=>e.style.display="none");
 homePage.style.display="none";
-}
-
-// VALIDATION (FIXED)
-function validate(){
-
-let ok=true;
-
-function err(id,msg){
-document.getElementById(id).innerText = msg;
-if(msg) ok=false;
-}
-
-err("fnameError", fname.value ? "" : "Invalid Input");
-err("mnameError", mname.value ? "" : "Invalid Input");
-err("lnameError", lname.value ? "" : "Invalid Input");
-err("addressError", address.value ? "" : "Invalid Input");
-err("idError", id.value ? "" : "Invalid Input");
-err("deptError", dept.value ? "" : "Invalid Input");
-err("emailError", email.value ? "" : "Invalid Input");
-err("numberError", number.value.length===11 ? "" : "Invalid Input");
-err("dateError", date.value ? "" : "Invalid Input");
-err("rateError", rate.value>0 ? "" : "Invalid Input");
-err("hoursError", hours.value>0 ? "" : "Invalid Input");
-
-return ok;
 }
 
 // ADD
 addForm.addEventListener("submit",e=>{
 e.preventDefault();
-
-if(!validate()) return;
 
 employees.push({
 fname:fname.value,
@@ -61,7 +34,7 @@ alert("Saved!");
 addForm.reset();
 });
 
-// FILE
+// ================= FIXED CHECK FILE =================
 function renderFile(){
 
 fileList.innerHTML="";
@@ -70,30 +43,49 @@ employees.forEach(emp=>{
 let salary = emp.rate * emp.hours * 22;
 
 fileList.innerHTML+=`
-<pre>
-${emp.fname} ${emp.lname}
-ID: ${emp.id}
-Salary: ₱${salary}
+<div class="employee-card">
+
+<button class="delete-btn"
+onclick="deleteEmployee('${emp.id}')">
+X
+</button>
+
+<pre style="text-align:left">
+==================================================
+Name   : ${emp.fname} ${emp.mname} ${emp.lname}
+ID     : ${emp.id}
+Dept   : ${emp.dept}
+Email  : ${emp.email}
+Number : ${emp.number}
+Date   : ${emp.date}
+Salary : ₱${salary.toFixed(2)}
+==================================================
 </pre>
+
+</div>
 `;
 });
+}
+
+// DELETE (FIXED)
+function deleteEmployee(id){
+employees = employees.filter(e=>e.id !== id);
+renderFile();
+alert("Deleted!");
 }
 
 // SEARCH
 function searchEmployee(){
 
-searchResult.innerHTML="";
-
 let q = searchBar.value.toLowerCase();
+
+searchResult.innerHTML="";
 
 employees.forEach(emp=>{
 let salary = emp.rate * emp.hours * 22;
 
-if(
-emp.fname.toLowerCase().includes(q) ||
-emp.id.includes(q) ||
-String(salary).includes(q)
-){
+if(emp.fname.toLowerCase().includes(q) ||
+emp.id.includes(q)){
 
 searchResult.innerHTML+=`
 <pre>
@@ -114,7 +106,7 @@ function findEmployee(){
 selected = employees.find(e=>e.id===updateID.value);
 
 if(!selected){
-updateMsg.innerText="Not found";
+alert("Not found");
 return;
 }
 
@@ -148,4 +140,9 @@ hours:+uhours.value
 });
 
 alert("Updated!");
+}
+
+// EXIT
+function exitSystem(){
+alert("Close tab manually.");
 }
