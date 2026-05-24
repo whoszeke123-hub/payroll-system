@@ -53,13 +53,9 @@ font-weight:bold;
 cursor:pointer;
 }
 
-.menu-btn:hover{
-background:#2563eb;
-}
+.menu-btn:hover{background:#2563eb}
 
-.exit-btn{
-background:#7f1d1d;
-}
+.exit-btn{background:#7f1d1d}
 
 .form-container{
 display:none;
@@ -89,15 +85,8 @@ font-weight:bold;
 cursor:pointer;
 }
 
-.submit-btn{
-background:#2563eb;
-color:white;
-}
-
-.back-btn{
-background:#475569;
-color:white;
-}
+.submit-btn{background:#2563eb;color:white}
+.back-btn{background:#475569;color:white}
 
 #fileList pre{
 text-align:left;
