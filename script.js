@@ -6,12 +6,13 @@ JSON.parse(localStorage.getItem("timeRecords")) || [];
 
 let selectedEmployee = null;
 
+// SAVE STORAGE
 function saveStorage(){
 localStorage.setItem("employees",JSON.stringify(employees));
 localStorage.setItem("timeRecords",JSON.stringify(timeRecords));
 }
 
-// NAV
+// NAVIGATION
 function showAdd(){hideAll();addPage.style.display="block";}
 function showTime(){hideAll();timePage.style.display="block";}
 function showFile(){hideAll();filePage.style.display="block";renderFile();}
@@ -25,7 +26,7 @@ document.querySelectorAll(".form-container")
 homePage.style.display="none";
 }
 
-// ADD
+// ADD EMPLOYEE (UNCHANGED)
 addForm.addEventListener("submit",e=>{
 e.preventDefault();
 
@@ -48,7 +49,7 @@ alert("Saved!");
 e.target.reset();
 });
 
-// CHECK FILE (GROUPED + DELETE)
+// ================= CHECK FILE (UNCHANGED STRUCTURE) =================
 function renderFile(){
 
 fileList.innerHTML="";
@@ -65,24 +66,40 @@ fileList.innerHTML+=`<h3>${dept}</h3>`;
 
 grouped[dept].forEach(emp=>{
 
-let salary=emp.rate*emp.hours*22;
+let salary = emp.rate * emp.hours * 22;
 
 fileList.innerHTML+=`
 <div style="position:relative">
+
+<pre style="text-align:left">
+==================================================
+Employee Name      : ${emp.fname} ${emp.mname} ${emp.lname}
+Address            : ${emp.address}
+Employee ID        : ${emp.id}
+Department         : ${emp.dept}
+Email              : ${emp.email}
+Contact Number     : ${emp.number}
+Date of Employment : ${emp.date}
+Rate Per Hour      : ${emp.rate}
+Daily Hours        : ${emp.hours}
+Monthly Salary     : ₱${salary.toFixed(2)}
+==================================================
+</pre>
+
 <button onclick="deleteEmployee('${emp.id}')"
-style="position:absolute;top:5px;right:5px;background:red;color:white">
+style="
+position:absolute;
+top:5px;
+right:5px;
+background:red;
+color:white;
+border:none;
+padding:5px 8px;
+cursor:pointer;
+">
 X
 </button>
 
-<pre>
-Employee: ${emp.fname} ${emp.mname} ${emp.lname}
-ID: ${emp.id}
-Dept: ${emp.dept}
-Email: ${emp.email}
-Number: ${emp.number}
-Date: ${emp.date}
-Salary: ₱${salary}
-</pre>
 </div>
 `;
 });
@@ -96,45 +113,64 @@ saveStorage();
 renderFile();
 }
 
-// SEARCH (SINGLE BAR)
+// ================= SEARCH (SINGLE BAR ONLY) =================
 function searchEmployee(){
-
-let q = searchBar.value.toLowerCase();
 
 searchResult.innerHTML="";
 
-let results = employees.filter(emp=>{
-let full = `${emp.fname} ${emp.mname} ${emp.lname}`.toLowerCase();
-let salary = emp.rate*emp.hours*22;
+let q = searchBar.value.toLowerCase();
 
-return full.includes(q) ||
+let results = employees.filter(emp=>{
+
+let fullName =
+`${emp.fname} ${emp.mname} ${emp.lname}`.toLowerCase();
+
+let salary = emp.rate * emp.hours * 22;
+
+return fullName.includes(q) ||
 emp.id.includes(q) ||
 String(salary).includes(q);
+
 });
 
+if(results.length===0){
+searchResult.innerHTML="No employee found";
+return;
+}
+
 results.forEach(emp=>{
-let salary=emp.rate*emp.hours*22;
+
+let salary = emp.rate * emp.hours * 22;
 
 searchResult.innerHTML+=`
-<pre>
-Employee: ${emp.fname} ${emp.mname} ${emp.lname}
-ID: ${emp.id}
-Dept: ${emp.dept}
-Email: ${emp.email}
-Number: ${emp.number}
-Date: ${emp.date}
-Salary: ₱${salary}
+<pre style="text-align:left">
+==================================================
+Employee Name      : ${emp.fname} ${emp.mname} ${emp.lname}
+Address            : ${emp.address}
+Employee ID        : ${emp.id}
+Department         : ${emp.dept}
+Email              : ${emp.email}
+Contact Number     : ${emp.number}
+Date of Employment : ${emp.date}
+Rate Per Hour      : ${emp.rate}
+Daily Hours        : ${emp.hours}
+Monthly Salary     : ₱${salary.toFixed(2)}
+==================================================
 </pre>
 `;
 });
+
 }
 
-// TIME
+// ================= TIME =================
 function saveTime(){
 
 let emp = employees.find(e=>e.id===timeID.value);
 
-if(!emp){timeMsg.innerText="Not found";return;}
+if(!emp){
+timeMsg.innerText="ID not found";
+return;
+}
 
 timeRecords.push({
 id:emp.id,
@@ -146,42 +182,48 @@ saveStorage();
 timeMsg.innerText="Saved!";
 }
 
-// UPDATE
+// ================= UPDATE (FIXED ONLY, STRUCTURE SAME) =================
 function findEmployee(){
 
 let emp = employees.find(e=>e.id===updateID.value);
 
-if(!emp){updateMsg.innerText="Not found";return;}
+if(!emp){
+updateMsg.innerText="Employee not found";
+return;
+}
 
-selectedEmployee=emp;
+selectedEmployee = emp;
 editForm.style.display="block";
 
-ufname.value=emp.fname;
-umname.value=emp.mname;
-ulname.value=emp.lname;
-uaddress.value=emp.address;
-udept.value=emp.dept;
-uemail.value=emp.email;
-unumber.value=emp.number;
-udate.value=emp.date;
-urate.value=emp.rate;
-uhours.value=emp.hours;
+ufname.value = emp.fname;
+umname.value = emp.mname;
+ulname.value = emp.lname;
+uaddress.value = emp.address;
+udept.value = emp.dept;
+uemail.value = emp.email;
+unumber.value = emp.number;
+udate.value = emp.date;
+urate.value = emp.rate;
+uhours.value = emp.hours;
 }
 
 function saveUpdate(){
 
-Object.assign(selectedEmployee,{
-fname:ufname.value,
-mname:umname.value,
-lname:ulname.value,
-address:uaddress.value,
-dept:udept.value,
-email:uemail.value,
-number:unumber.value,
-date:udate.value,
-rate:+urate.value,
-hours:+uhours.value
-});
+if(!selectedEmployee){
+updateMsg.innerText="No employee selected";
+return;
+}
+
+selectedEmployee.fname = ufname.value;
+selectedEmployee.mname = umname.value;
+selectedEmployee.lname = ulname.value;
+selectedEmployee.address = uaddress.value;
+selectedEmployee.dept = udept.value;
+selectedEmployee.email = uemail.value;
+selectedEmployee.number = unumber.value;
+selectedEmployee.date = udate.value;
+selectedEmployee.rate = +urate.value;
+selectedEmployee.hours = +uhours.value;
 
 saveStorage();
 alert("Updated!");
