@@ -9,9 +9,7 @@
 
 <body>
 
-<!-- HOME -->
 <div class="container" id="homePage">
-
 <div class="logo-circle">PS</div>
 <h1>PAYROLL SYSTEM</h1>
 
@@ -23,66 +21,31 @@
 <button onclick="showUpdate()">Update Info</button>
 <button onclick="exitSystem()">Exit</button>
 </div>
-
 </div>
 
 <!-- ADD -->
 <div class="form-container" id="addPage">
-
 <h2>ADD EMPLOYEE</h2>
 
 <form id="addForm">
-
 <input id="fname" placeholder="First Name">
-<small id="fnameError" class="error"></small>
-
 <input id="mname" placeholder="Middle Name">
-<small id="mnameError" class="error"></small>
-
 <input id="lname" placeholder="Last Name">
-<small id="lnameError" class="error"></small>
 
 <input id="address" placeholder="Address">
-<small id="addressError" class="error"></small>
-
 <input id="id" placeholder="Employee ID">
-<small id="idError" class="error"></small>
-
 <input id="dept" placeholder="Department">
-<small id="deptError" class="error"></small>
 
 <input id="email" placeholder="Email">
-<small id="emailError" class="error"></small>
-
 <input id="number" placeholder="11-digit Number">
-<small id="numberError" class="error"></small>
 
 <input type="date" id="date">
-<small id="dateError" class="error"></small>
 
 <input id="rate" type="number" placeholder="Rate Per Hour">
-<small id="rateError" class="error"></small>
-
 <input id="hours" type="number" placeholder="Daily Hours">
-<small id="hoursError" class="error"></small>
 
 <button type="submit">SAVE</button>
 </form>
-
-<button onclick="backHome()">BACK</button>
-
-</div>
-
-<!-- TIME -->
-<div class="form-container" id="timePage">
-<h2>TIME IN / OUT</h2>
-
-<input id="timeID" placeholder="ID">
-<input type="time" id="timeIn">
-<input type="time" id="timeOut">
-
-<button onclick="saveTime()">SAVE</button>
-<p id="timeMsg"></p>
 
 <button onclick="backHome()">BACK</button>
 </div>
@@ -97,24 +60,18 @@
 <!-- SEARCH -->
 <div class="form-container" id="searchPage">
 <h2>SEARCH</h2>
-
-<input id="searchBar" placeholder="Search name / ID / salary">
+<input id="searchBar" placeholder="Search">
 <button onclick="searchEmployee()">SEARCH</button>
-
 <div id="searchResult"></div>
-
 <button onclick="backHome()">BACK</button>
 </div>
 
 <!-- UPDATE -->
 <div class="form-container" id="updatePage">
-
 <h2>UPDATE</h2>
 
-<input id="updateID" placeholder="Enter ID">
+<input id="updateID" placeholder="ID">
 <button onclick="findEmployee()">SEARCH</button>
-
-<p id="updateMsg"></p>
 
 <div id="editForm" style="display:none">
 
@@ -125,16 +82,14 @@
 <input id="udept">
 <input id="uemail">
 <input id="unumber">
-<input type="date" id="udate">
+<input id="udate" type="date">
 <input id="urate">
 <input id="uhours">
 
-<button onclick="saveUpdate()">SAVE CHANGES</button>
-
+<button onclick="saveUpdate()">SAVE</button>
 </div>
 
 <button onclick="backHome()">BACK</button>
-
 </div>
 
 <script src="script.js"></script>
