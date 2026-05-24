@@ -11,20 +11,20 @@
 
 <!-- HOME -->
 <div class="container" id="homePage">
+    <div class="logo-section">
+        <div class="logo-circle">PS</div>
+        <h1>PAYROLL SYSTEM</h1>
+        <p>Employee Record & Salary Management</p>
+    </div>
 
-<div class="logo-circle">PS</div>
-<h1>PAYROLL SYSTEM</h1>
-<p>Employee Record & Salary Management</p>
-
-<div class="menu">
-<button class="menu-btn" onclick="showAdd()">Add New Employee</button>
-<button class="menu-btn" onclick="showTime()">Time In & Time Out</button>
-<button class="menu-btn" onclick="showFile()">Check File</button>
-<button class="menu-btn" onclick="showSearch()">Search</button>
-<button class="menu-btn" onclick="showUpdate()">Update Info</button>
-<button class="menu-btn exit-btn" onclick="exitSystem()">Exit</button>
-</div>
-
+    <div class="menu">
+        <button class="menu-btn" onclick="showAdd()">Add New Employee</button>
+        <button class="menu-btn" onclick="showTime()">Time In & Time Out</button>
+        <button class="menu-btn" onclick="showFile()">Check File</button>
+        <button class="menu-btn" onclick="showSearch()">Search</button>
+        <button class="menu-btn" onclick="showUpdate()">Update Info</button>
+        <button class="menu-btn exit-btn" onclick="exitSystem()">Exit</button>
+    </div>
 </div>
 
 <!-- ADD -->
@@ -33,34 +33,38 @@
 
 <form id="addForm">
 
-<input id="fname" placeholder="First Name" required>
-<span class="error" id="fnameError"></span>
+<input id="fname" placeholder="First Name">
+<small class="error" id="fnameError"></small>
 
-<input id="mname" placeholder="Middle Name" required>
-<span class="error" id="mnameError"></span>
+<input id="mname" placeholder="Middle Name">
+<small class="error" id="mnameError"></small>
 
-<input id="lname" placeholder="Last Name" required>
-<span class="error" id="lnameError"></span>
+<input id="lname" placeholder="Last Name">
+<small class="error" id="lnameError"></small>
 
-<input id="address" placeholder="Address" required>
-<span class="error" id="addressError"></span>
+<input id="address" placeholder="Address">
+<small class="error" id="addressError"></small>
 
-<input id="id" placeholder="0000-000" required>
-<span class="error" id="idError"></span>
+<input id="id" placeholder="0000-000">
+<small class="error" id="idError"></small>
 
-<input id="dept" placeholder="Department" required>
-<span class="error" id="deptError"></span>
+<input id="dept" placeholder="Department">
+<small class="error" id="deptError"></small>
 
-<input type="email" id="email" placeholder="Email" required>
-<input id="number" placeholder="11-digit Number" required>
+<input id="email" placeholder="Email">
+<small class="error" id="emailError"></small>
 
-<input type="date" id="date" required>
+<input id="number" placeholder="11-digit Number">
+<small class="error" id="numberError"></small>
 
-<input type="number" id="rate" placeholder="Rate Per Hour" required>
-<span class="error" id="rateError"></span>
+<input type="date" id="date">
+<small class="error" id="dateError"></small>
 
-<input type="number" id="hours" placeholder="Daily Hours" required>
-<span class="error" id="hoursError"></span>
+<input id="rate" placeholder="Rate Per Hour">
+<small class="error" id="rateError"></small>
+
+<input id="hours" placeholder="Daily Hours">
+<small class="error" id="hoursError"></small>
 
 <button class="submit-btn">SAVE</button>
 </form>
@@ -93,14 +97,16 @@
 <div class="form-container" id="searchPage">
 <h2>SEARCH EMPLOYEE</h2>
 
-<button class="menu-btn" onclick="filterSalary('below')">Below 50,000</button>
-<button class="menu-btn" onclick="filterSalary('above')">Above 50,000</button>
+<div class="search-top">
+<button class="menu-btn" onclick="filterSalary('below')">Below 50k</button>
+<button class="menu-btn" onclick="filterSalary('above')">Above 50k</button>
+</div>
 
 <input id="searchName" placeholder="Search Name">
-<button class="menu-btn" onclick="searchByName()">SEARCH NAME</button>
+<button class="menu-btn" onclick="searchByName()">SEARCH</button>
 
 <input id="searchID" placeholder="Search ID">
-<button class="menu-btn" onclick="searchByID()">SEARCH ID</button>
+<button class="menu-btn" onclick="searchByID()">SEARCH</button>
 
 <div id="searchResult"></div>
 
@@ -116,8 +122,7 @@
 
 <p id="updateMsg"></p>
 
-<div id="editForm" style="display:none">
-
+<div id="editForm" style="display:none;">
 <input id="ufname">
 <input id="umname">
 <input id="ulname">
@@ -129,7 +134,7 @@
 <input id="urate">
 <input id="uhours">
 
-<button class="submit-btn" onclick="saveUpdate()">SAVE CHANGES</button>
+<button class="submit-btn" onclick="saveUpdate()">SAVE</button>
 </div>
 
 <button class="back-btn" onclick="backHome()">BACK</button>
