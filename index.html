@@ -9,14 +9,11 @@
 
 <body>
 
-<!-- ================= HOME ================= -->
 <div class="container" id="homePage">
 
-    <div class="logo-section">
-        <div class="logo-circle">PS</div>
-        <h1>PAYROLL SYSTEM</h1>
-        <p>Employee Record & Salary Management</p>
-    </div>
+    <div class="logo-circle">PS</div>
+    <h1>PAYROLL SYSTEM</h1>
+    <p>Employee Record & Salary Management</p>
 
     <div class="menu">
         <button class="menu-btn" onclick="showAdd()">Add New Employee</button>
@@ -29,88 +26,102 @@
 
 </div>
 
-<!-- ================= ADD ================= -->
+<!-- ADD -->
 <div class="form-container" id="addPage">
-<h2 class="form-title">ADD EMPLOYEE</h2>
+<h2>ADD EMPLOYEE</h2>
+
 <form id="addForm">
 
 <input id="fname" placeholder="First Name" required>
+<input id="mname" placeholder="Middle Name" required>
 <input id="lname" placeholder="Last Name" required>
+
 <input id="address" placeholder="Address" required>
 <input id="id" placeholder="ID" required>
 <input id="dept" placeholder="Department" required>
-<input type="email" id="email" placeholder="Email" required>
+
+<input id="email" placeholder="Email" required>
+<input id="number" placeholder="11-digit Number" required>
+
 <input type="date" id="date" required>
+
 <input type="number" id="rate" placeholder="Rate Per Hour" required>
 <input type="number" id="hours" placeholder="Daily Hours" required>
 
-<button class="submit-btn">SAVE</button>
-<button type="button" class="back-btn" onclick="backHome()">BACK</button>
+<button>Save</button>
+<button type="button" onclick="backHome()">Back</button>
 
 </form>
 </div>
 
-<!-- ================= TIME ================= -->
+<!-- TIME -->
 <div class="form-container" id="timePage">
-<h2 class="form-title">TIME IN / OUT</h2>
+<h2>TIME IN / OUT</h2>
 
 <input id="timeID" placeholder="ID">
 <input type="time" id="timeIn">
 <input type="time" id="timeOut">
 
-<button class="submit-btn" onclick="saveTime()">SAVE</button>
+<button onclick="saveTime()">Save</button>
 <p id="timeMsg"></p>
 
-<button class="back-btn" onclick="backHome()">BACK</button>
+<button onclick="backHome()">Back</button>
 </div>
 
-<!-- ================= FILE ================= -->
+<!-- FILE -->
 <div class="form-container" id="filePage">
-<h2 class="form-title">EMPLOYEE FILES</h2>
+<h2>EMPLOYEE FILES</h2>
 
 <div id="fileList"></div>
 
-<button class="back-btn" onclick="backHome()">BACK</button>
+<button onclick="backHome()">Back</button>
 </div>
 
-<!-- ================= SEARCH ================= -->
+<!-- SEARCH -->
 <div class="form-container" id="searchPage">
-<h2 class="form-title">SEARCH SALARY</h2>
+<h2>SEARCH</h2>
 
-<button class="menu-btn" onclick="filterSalary('below')">Below 50,000</button>
-<button class="menu-btn" onclick="filterSalary('above')">Above 50,000</button>
+<button onclick="filterSalary('below')">Below 50K</button>
+<button onclick="filterSalary('above')">Above 50K</button>
+
+<input id="searchName" placeholder="Search Name">
+<button onclick="searchByName()">Search</button>
+
+<input id="searchID" placeholder="Search ID">
+<button onclick="searchByID()">Search</button>
 
 <div id="searchResult"></div>
 
-<button class="back-btn" onclick="backHome()">BACK</button>
+<button onclick="backHome()">Back</button>
 </div>
 
-<!-- ================= UPDATE ================= -->
+<!-- UPDATE -->
 <div class="form-container" id="updatePage">
-
-<h2 class="form-title">UPDATE EMPLOYEE INFO</h2>
+<h2>UPDATE</h2>
 
 <input id="updateID" placeholder="Enter ID">
-<button class="submit-btn" onclick="findEmployee()">SEARCH</button>
+<button onclick="findEmployee()">Search</button>
 
 <p id="updateMsg"></p>
 
 <div id="editForm" style="display:none">
 
 <input id="ufname">
+<input id="umname">
 <input id="ulname">
 <input id="uaddress">
 <input id="udept">
 <input id="uemail">
+<input id="unumber">
+<input id="udate" type="date">
 <input id="urate">
 <input id="uhours">
 
-<button class="submit-btn" onclick="saveUpdate()">SAVE CHANGES</button>
+<button onclick="saveUpdate()">Save</button>
 
 </div>
 
-<button class="back-btn" onclick="backHome()">BACK</button>
-
+<button onclick="backHome()">Back</button>
 </div>
 
 <script src="script.js"></script>
