@@ -9,56 +9,77 @@
 
 <body>
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 <div class="container" id="homePage">
 
-    <div class="logo-section">
-        <div class="logo-circle">PS</div>
-        <h1>PAYROLL SYSTEM</h1>
-        <p>Employee Record & Salary Management</p>
-    </div>
+<div class="logo-section">
+<div class="logo-circle">PS</div>
+<h1>PAYROLL SYSTEM</h1>
+<p>Employee Record & Salary Management</p>
+</div>
 
-    <div class="menu">
-        <button class="menu-btn" onclick="showAdd()">Add New Employee</button>
-        <button class="menu-btn" onclick="showTime()">Time In & Time Out</button>
-        <button class="menu-btn" onclick="showFile()">Check File</button>
-        <button class="menu-btn" onclick="showSearch()">Search</button>
-        <button class="menu-btn" onclick="showUpdate()">Update Info</button>
-        <button class="menu-btn exit-btn" onclick="exitSystem()">Exit</button>
-    </div>
+<div class="menu">
+<button class="menu-btn" onclick="showAdd()">Add New Employee</button>
+<button class="menu-btn" onclick="showTime()">Time In & Time Out</button>
+<button class="menu-btn" onclick="showFile()">Check File</button>
+<button class="menu-btn" onclick="showSearch()">Search</button>
+<button class="menu-btn" onclick="showUpdate()">Update Info</button>
+<button class="menu-btn exit-btn" onclick="exitSystem()">Exit</button>
+</div>
 
 </div>
 
-<!-- ================= ADD ================= -->
+<!-- ADD -->
 <div class="form-container" id="addPage">
+
 <h2 class="form-title">ADD EMPLOYEE</h2>
 
 <form id="addForm">
 
 <input id="fname" placeholder="First Name" required>
+<small id="fnameError" class="error"></small>
+
+<input id="mname" placeholder="Middle Name" required>
+<small id="mnameError" class="error"></small>
+
 <input id="lname" placeholder="Last Name" required>
+<small id="lnameError" class="error"></small>
+
 <input id="address" placeholder="Address" required>
-<input id="id" placeholder="ID" required>
+<small id="addressError" class="error"></small>
+
+<input id="id" placeholder="0000-000" required>
+<small id="idError" class="error"></small>
+
 <input id="dept" placeholder="Department" required>
+<small id="deptError" class="error"></small>
+
 <input type="email" id="email" placeholder="Email" required>
+<small id="emailError" class="error"></small>
 
-<div style="text-align:left; margin:5px 0; font-size:14px; color:white;">
-Date Of Employment:
-</div>
+<input id="number" placeholder="11-digit Number" required>
+<small id="numberError" class="error"></small>
 
+<div class="label">Date Of Employment:</div>
 <input type="date" id="date" required>
+<small id="dateError" class="error"></small>
 
 <input type="number" id="rate" placeholder="Rate Per Hour" required>
+<small id="rateError" class="error"></small>
+
 <input type="number" id="hours" placeholder="Daily Hours" required>
+<small id="hoursError" class="error"></small>
 
 <button class="submit-btn">SAVE</button>
 <button type="button" class="back-btn" onclick="backHome()">BACK</button>
 
 </form>
+
 </div>
 
-<!-- ================= TIME ================= -->
+<!-- TIME -->
 <div class="form-container" id="timePage">
+
 <h2 class="form-title">TIME IN / OUT</h2>
 
 <input id="timeID" placeholder="ID">
@@ -66,33 +87,41 @@ Date Of Employment:
 <input type="time" id="timeOut">
 
 <button class="submit-btn" onclick="saveTime()">SAVE</button>
-<p id="timeMsg" style="color:#fca5a5"></p>
+<p id="timeMsg"></p>
 
 <button class="back-btn" onclick="backHome()">BACK</button>
+
 </div>
 
-<!-- ================= FILE ================= -->
+<!-- FILE -->
 <div class="form-container" id="filePage">
+
 <h2 class="form-title">EMPLOYEE FILES</h2>
 
-<div id="fileList" style="text-align:left"></div>
+<div id="fileList"></div>
 
 <button class="back-btn" onclick="backHome()">BACK</button>
+
 </div>
 
-<!-- ================= SEARCH ================= -->
+<!-- SEARCH -->
 <div class="form-container" id="searchPage">
-<h2 class="form-title">SEARCH SALARY</h2>
 
-<button class="menu-btn" onclick="filterSalary('below')">Below 50,000</button>
-<button class="menu-btn" onclick="filterSalary('above')">Above 50,000</button>
+<h2 class="form-title">SEARCH EMPLOYEE</h2>
+
+<input id="searchBar" placeholder="Search name, ID, or salary">
+
+<button class="menu-btn" onclick="searchEmployee()">
+SEARCH
+</button>
 
 <div id="searchResult"></div>
 
 <button class="back-btn" onclick="backHome()">BACK</button>
+
 </div>
 
-<!-- ================= UPDATE ================= -->
+<!-- UPDATE -->
 <div class="form-container" id="updatePage">
 
 <h2 class="form-title">UPDATE EMPLOYEE INFO</h2>
@@ -100,26 +129,24 @@ Date Of Employment:
 <input id="updateID" placeholder="Enter ID">
 <button class="submit-btn" onclick="findEmployee()">SEARCH</button>
 
-<p id="updateMsg" style="color:#fca5a5"></p>
+<p id="updateMsg"></p>
 
 <div id="editForm" style="display:none">
 
-<input id="ufname" placeholder="First Name">
-<input id="ulname" placeholder="Last Name">
-<input id="uaddress" placeholder="Address">
-<input id="udept" placeholder="Department">
-<input id="uemail" placeholder="Email">
-
-<div style="text-align:left; margin:5px 0; font-size:14px;">
-Date Of Employment:
-</div>
-
+<input id="ufname">
+<input id="umname">
+<input id="ulname">
+<input id="uaddress">
+<input id="udept">
+<input id="uemail">
+<input id="unumber">
 <input id="udate" type="date">
+<input id="urate">
+<input id="uhours">
 
-<input id="urate" placeholder="Rate Per Hour">
-<input id="uhours" placeholder="Daily Hours">
-
-<button class="submit-btn" onclick="saveUpdate()">SAVE CHANGES</button>
+<button class="submit-btn" onclick="saveUpdate()">
+SAVE CHANGES
+</button>
 
 </div>
 
