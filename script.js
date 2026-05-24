@@ -1,11 +1,6 @@
-let employees = JSON.parse(localStorage.getItem("employees")) || [];
-let timeRecords = JSON.parse(localStorage.getItem("timeRecords")) || [];
+let employees = [];
+let timeRecords = [];
 let selectedEmployee = null;
-
-function saveStorage(){
-localStorage.setItem("employees", JSON.stringify(employees));
-localStorage.setItem("timeRecords", JSON.stringify(timeRecords));
-}
 
 // NAVIGATION
 function showAdd(){hideAll();addPage.style.display="block";}
@@ -38,13 +33,11 @@ rate:+rate.value,
 hours:+hours.value
 });
 
-saveStorage();
-
 alert("Saved!");
 e.target.reset();
 });
 
-// CHECK FILE (UNCHANGED FORMAT STYLE)
+// CHECK FILE (ORIGINAL FORMAT PRESERVED)
 function renderFile(){
 
 fileList.innerHTML="";
@@ -75,6 +68,7 @@ border:1px solid rgba(255,255,255,0.2);
 font-family:monospace;
 text-align:left;
 ">
+
 ==================================================
 Employee Name        : ${emp.fname} ${emp.mname} ${emp.lname}
 Employee Address     : ${emp.address}
@@ -83,69 +77,112 @@ Department           : ${emp.dept}
 Email                : ${emp.email}
 Contact Number       : ${emp.number}
 Date of Employment   : ${emp.date}
-Rate Per Hour        : ${emp.rate}
+Rate Per Hour        : ${emp.rate.toFixed(2)}
 Daily Hours          : ${emp.hours}
 Monthly Salary       : Php ${salary.toFixed(2)}
 ==================================================
 </pre>
 `;
 });
+
 }
+}
+
+// TIME
+function saveTime(){
+
+let emp = employees.find(e=>e.id===timeID.value);
+
+if(!emp){
+timeMsg.innerText="This ID does not exist";
+return;
+}
+
+timeRecords.push({
+id:emp.id,
+in:timeIn.value,
+out:timeOut.value
+});
+
+timeMsg.innerText="Time saved!";
 }
 
 // SEARCH SALARY
 function filterSalary(type){
+
 searchResult.innerHTML="";
 
 employees.forEach(emp=>{
+
 let salary=emp.rate*emp.hours*22;
 
-if((type==="below"&&salary<50000)||(type==="above"&&salary>=50000)){
+if(type==="below" && salary<50000 ||
+type==="above" && salary>=50000){
+
 searchResult.innerHTML+=`
 <div style="border:1px solid white;padding:10px;margin:10px;border-radius:10px;">
 ${emp.fname} ${emp.mname} ${emp.lname}<br>
 Salary: ₱${salary.toFixed(2)}
-</div>`;
+</div>
+`;
 }
+
 });
 }
 
 // SEARCH NAME
 function searchByName(){
+
 searchResult.innerHTML="";
-let s=searchName.value.toLowerCase();
+
+let search = searchName.value.toLowerCase();
 
 employees.forEach(emp=>{
-let full=`${emp.fname} ${emp.mname} ${emp.lname}`.toLowerCase();
-if(full.includes(s)){
+
+let full = `${emp.fname} ${emp.mname} ${emp.lname}`.toLowerCase();
+
+if(full.includes(search)){
+
 searchResult.innerHTML+=`
 <div style="border:1px solid white;padding:10px;margin:10px;border-radius:10px;">
 ${full}<br>ID: ${emp.id}
-</div>`;
+</div>
+`;
 }
+
 });
 }
 
 // SEARCH ID
 function searchByID(){
-searchResult.innerHTML="";
-let emp=employees.find(e=>e.id===searchID.value);
 
-searchResult.innerHTML = emp ?
-`<div style="border:1px solid white;padding:10px;margin:10px;border-radius:10px;">
+searchResult.innerHTML="";
+
+let emp = employees.find(e=>e.id===searchID.value);
+
+if(emp){
+searchResult.innerHTML+=`
+<div style="border:1px solid white;padding:10px;margin:10px;border-radius:10px;">
 ${emp.fname} ${emp.mname} ${emp.lname}<br>ID: ${emp.id}
-</div>`
-:
-"Employee not found";
+</div>
+`;
+}else{
+searchResult.innerHTML="Employee not found";
+}
 }
 
 // UPDATE
 function findEmployee(){
-let emp=employees.find(e=>e.id===updateID.value);
 
-if(!emp){updateMsg.innerText="Not found";return;}
+let emp = employees.find(e=>e.id===updateID.value);
 
-selectedEmployee=emp;
+if(!emp){
+updateMsg.innerText="Employee not found";
+return;
+}
+
+selectedEmployee = emp;
+
 editForm.style.display="block";
 
 ufname.value=emp.fname;
@@ -161,20 +198,18 @@ uhours.value=emp.hours;
 }
 
 function saveUpdate(){
-Object.assign(selectedEmployee,{
-fname:ufname.value,
-mname:umname.value,
-lname:ulname.value,
-address:uaddress.value,
-dept:udept.value,
-email:uemail.value,
-number:unumber.value,
-date:udate.value,
-rate:+urate.value,
-hours:+uhours.value
-});
 
-saveStorage();
+selectedEmployee.fname=ufname.value;
+selectedEmployee.mname=umname.value;
+selectedEmployee.lname=ulname.value;
+selectedEmployee.address=uaddress.value;
+selectedEmployee.dept=udept.value;
+selectedEmployee.email=uemail.value;
+selectedEmployee.number=unumber.value;
+selectedEmployee.date=udate.value;
+selectedEmployee.rate=+urate.value;
+selectedEmployee.hours=+uhours.value;
+
 alert("Updated!");
 }
 
